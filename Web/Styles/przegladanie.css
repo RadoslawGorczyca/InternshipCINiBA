@@ -1,0 +1,67 @@
+﻿body
+{
+}
+
+/*
+    Tabela.
+*/
+.tableStandFailureCSSClass
+{
+    background-color: burlywood;
+}
+
+/*
+    Wszystkie komórki nagłówka.
+*/
+.tableStandFailureCSSClass th
+{
+    background-color: gold;
+}
+
+/*
+    1-sza komórka nagłowka.
+*/
+.tableStandFailureCSSClass th:first-child
+{
+    background-color: wheat;
+}
+
+/*
+    2-ga komórka nagłówka.
+*/
+.tableStandFailureCSSClass th:first-child + th
+{
+    background-color: tan;
+}
+
+/*
+    3-cia komórka nagłówka.
+*/
+.tableStandFailureCSSClass th:first-child + th + th
+{
+    background-color: lightsalmon;
+}
+
+/*
+    4-ta komórka nagłówka.
+*/
+.tableStandFailureCSSClass  th:first-child + th + th + th
+{
+    background-color: navajowhite;
+}
+
+/*
+    5-ta komórka nagłówka.
+*/
+.tableStandFailureCSSClass  th:first-child + th + th + th + th
+{
+    background-color: darkkhaki;
+}
+
+/*
+    Wszystkie komórki poza nagłówkiem.
+*/
+.tableStandFailureCSSClass td
+{
+    background-color: peachpuff;
+}
