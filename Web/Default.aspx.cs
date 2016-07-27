@@ -124,5 +124,10 @@ namespace web
         {
             //Do nothing lol
         }
-}
+
+        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

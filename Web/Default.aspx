@@ -72,9 +72,6 @@
                                 <asp:ListItem Value="1">Oprogramowania</asp:ListItem>
                             </asp:RadioButtonList>
                         </ContentTemplate>
-                        <Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="RBDotyczy" EventName="SelectedIndexChanged" />
-                        </Triggers>
                     </asp:UpdatePanel>
                     <br />
                 </td>
@@ -94,21 +91,24 @@
             <tr>
                 <td style="width: 10%; text-align: right; padding-right: 10px;">Piętro:</td>
                 <td>
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
-                            <asp:DropDownList ID="Floor" runat="server" DataSourceID="SqlDataSource1" DataTextField="floor" DataValueField="floor" Height="25px" Width="89%">
+                            <asp:DropDownList ID="Floor" runat="server" DataSourceID="SqlDataSource1" DataTextField="floor" DataValueField="floor" Height="25px" Width="89%" AutoPostBack="True">
                             </asp:DropDownList>
                             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:areas %>" ProviderName="<%$ ConnectionStrings:areas.ProviderName %>" SelectCommand="SELECT DISTINCT [floor] FROM [areas]"></asp:SqlDataSource>
                         </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="RBDotyczy" EventName="SelectedIndexChanged" />
+                        </Triggers>
                     </asp:UpdatePanel>
                 </td>
             </tr>
             <tr>
                 <td style="width: 10%; text-align: right; padding-right: 10px;">Strefa:</td>
                 <td>
-                    <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                    <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
-                            <asp:DropDownList ID="Area" runat="server" DataSourceID="SqlDataSource2" DataTextField="area" DataValueField="area" Height="25px" Width="89%">
+                            <asp:DropDownList ID="Area" runat="server" DataSourceID="SqlDataSource2" DataTextField="area" DataValueField="area" Height="25px" Width="89%" AutoPostBack="True">
                             </asp:DropDownList>
                             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:areas %>" ProviderName="<%$ ConnectionStrings:areas.ProviderName %>" SelectCommand="SELECT DISTINCT [area] FROM [areas] WHERE ([floor] = ?)">
                                 <SelectParameters>
@@ -116,15 +116,19 @@
                                 </SelectParameters>
                             </asp:SqlDataSource>
                         </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="RBDotyczy" EventName="SelectedIndexChanged" />
+                            <asp:AsyncPostBackTrigger ControlID="Floor" EventName="SelectedIndexChanged" />
+                        </Triggers>
                     </asp:UpdatePanel>
                 </td>
             </tr>
             <tr>
                 <td style="width: 10%; text-align: right; padding-right: 10px;">Stanowisko:</td>
                 <td>
-                    <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+                    <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
-                            <asp:DropDownList ID="Stand" runat="server" DataSourceID="SqlDataSource3" DataTextField="stand" DataValueField="stand" Height="25px" Width="89%">
+                            <asp:DropDownList ID="Stand" runat="server" DataSourceID="SqlDataSource3" DataTextField="stand" DataValueField="stand" Height="25px" Width="89%" AutoPostBack="True">
                             </asp:DropDownList>
                             <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:areas %>" ProviderName="<%$ ConnectionStrings:areas.ProviderName %>" SelectCommand="SELECT DISTINCT [stand] FROM [areas] WHERE ([area] = ?)AND([floor] = ?)">
                                 <SelectParameters>
@@ -133,6 +137,11 @@
                                 </SelectParameters>
                             </asp:SqlDataSource>
                         </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="RBDotyczy" EventName="SelectedIndexChanged" />
+                            <asp:AsyncPostBackTrigger ControlID="Floor" EventName="SelectedIndexChanged" />
+                            <asp:AsyncPostBackTrigger ControlID="Area" EventName="SelectedIndexChanged" />
+                        </Triggers>
                     </asp:UpdatePanel>
 
                 </td>
