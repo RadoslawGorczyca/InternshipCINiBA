@@ -127,6 +127,24 @@ namespace web
 
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdatePanel2.Update();
+            UpdatePanel3.Update();
+            UpdatePanel4.Update();
+        }
+
+        protected void Floor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePanel3.Update();
+            UpdatePanel4.Update();
+        }
+
+        protected void Area_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePanel4.Update();
+        }
+
+        protected void Stand_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

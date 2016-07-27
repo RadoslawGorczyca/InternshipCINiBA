@@ -24,7 +24,26 @@ namespace web
                 css.Attributes.Add("type", "text/css");
                 css.InnerHtml = "@import \"" + Request.Url.GetLeftPart(UriPartial.Authority) + VirtualPathUtility.ToAbsolute("~/") + "Styles/site.css\";";
                 Page.Header.Controls.Add(css);
+
+            if (RBDotyczy.SelectedValue.ToString() == "1")
+            {
+                Floor.Enabled = false;
+                Area.Enabled = false;
+                Stand.Enabled = false;
+                TTemat.Enabled = true;
+                //TabelaSprzet.Visible = false;
+                //TabelaOprogramowanie.Visible = true;
             }
+            if (RBDotyczy.SelectedValue.ToString() == "0")
+            {
+                Floor.Enabled = true;
+                Area.Enabled = true;
+                Stand.Enabled = true;
+                TTemat.Enabled = false;
+                //TabelaSprzet.Visible = true;
+                //TabelaOprogramowanie.Visible = false;
+            }
+        }
         protected void BSend_Click(object sender, EventArgs e)
         {
             String date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").ToString();
@@ -91,5 +110,46 @@ namespace web
             // Do nothing lol
         }
 
+        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePanel2.Update();
+            UpdatePanel3.Update();
+            UpdatePanel4.Update();
+
+            if (RBDotyczy.SelectedValue == "1")
+            {
+                Floor.Enabled = false;
+                Area.Enabled = false;
+                Stand.Enabled = false;
+                TTemat.Enabled = true;
+                //TabelaSprzet.Visible = false;
+                //TabelaOprogramowanie.Visible = true;
+            }
+            if (RBDotyczy.SelectedValue == "0")
+            {
+                Floor.Enabled = true;
+                Area.Enabled = true;
+                Stand.Enabled = true;
+                TTemat.Enabled = false;
+                //TabelaSprzet.Visible = true;
+                //TabelaOprogramowanie.Visible = false;
+            }
+        }
+
+        protected void Floor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePanel3.Update();
+            UpdatePanel4.Update();
+        }
+
+        protected void Area_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePanel4.Update();
+        }
+
+        protected void Stand_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
