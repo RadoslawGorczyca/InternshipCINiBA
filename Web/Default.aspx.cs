@@ -40,8 +40,8 @@ namespace web
                     Area.Enabled = false;
                     Stand.Enabled = false;
                     TTemat.Enabled = true;
-                    //TabelaSprzet.Visible = false;
-                    //TabelaOprogramowanie.Visible = true;
+                    TabelaSprzet.Visible = false;
+                    TabelaOprogramowanie.Visible = true;
                     
                 }
                 if (RBDotyczy.SelectedValue.ToString() == "0")
@@ -50,8 +50,8 @@ namespace web
                     Area.Enabled = true;
                     Stand.Enabled = true;
                     TTemat.Enabled = false;
-                    //TabelaSprzet.Visible = true;
-                    //TabelaOprogramowanie.Visible = false;
+                    TabelaSprzet.Visible = true;
+                    TabelaOprogramowanie.Visible = false;
                 }
 
                 String log = FirstCharToUpper(Session["logged as"].ToString());
@@ -91,47 +91,111 @@ namespace web
             String F = Floor.Text;
             String A = Area.Text;
             String S = Stand.Text;
+            String T = TTemat.Text;
 
-            if (C.Length > 4 && N.Length > 2 && M.Length > 2 && F.Length > 2 && A.Length > 2 && S.Length > 2)
+            int ID;
+
+            if (RBDotyczy.SelectedValue.ToString() == "0")
             {
-                OleDbConnection cnn = null;
-
-                cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Server.MapPath("./App_Data/Failures.accdb"));
-                cnn.Open();
-
-                OleDbCommand cm = new OleDbCommand("INSERT INTO failure (content, surname, email, floor, area, stand, sendDate) values ('" + C + "', '" + N + "', '" + M + "', '" + F + "','" + A + "', '" + S + "', '" + date + "')", cnn);
-
-                cm.ExecuteNonQuery();
-
-                cnn.Close();
-                /*
-                string system_mail = "system@o2.pl";
-                string system_password = "system";
-                string adminstration_mail = "admin@o2.pl";
-
-                SmtpClient client = new SmtpClient
+                if (C.Length > 2 && N.Length > 2 && M.Length > 2 && F.Length > 2 && A.Length > 2 && S.Length > 2)
                 {
-                    Host = "poczta.o2.pl",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    Credentials = new System.Net.NetworkCredential(system_mail, system_password),
-                    Timeout = 10000,
-                };
-                MailMessage customer = new MailMessage(system_mail, M, "Zgłoszenie awarii", "Awaria została pomyślnie zgłoszona.");
-                client.Send(customer);
 
-                MailMessage administration = new MailMessage(system_mail, adminstration_mail, "Zgłoszenie awarii", "Nowe zgłoszenie awarii oczekujące na przjęcie.");
-                client.Send(administration);
-                */
-                TC.Text = "";
-                
+                    OleDbConnection cnn = null;
 
-                Response.Redirect("ProblemReported.aspx");
+                    cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Server.MapPath("./App_Data/Failures.accdb"));
+                    cnn.Open();
+
+                    OleDbCommand cm = new OleDbCommand("INSERT INTO failure (what, content, surname, email, floor, area, stand, sendDate) values ('SPRZĘT', '" + C + "', '" + N + "', '" + M + "', '" + F + "','" + A + "', '" + S + "', '" + date + "')", cnn);
+
+                    cm.ExecuteNonQuery();
+
+
+                    string to = M;
+                    string from = "system@ciniba.edu.pl";
+                    string system = "d-i@ciniba.edu.pl";
+                    MailMessage person = new MailMessage(from, to);
+                    MailMessage admin = new MailMessage(from, system);
+                    SmtpClient client = new SmtpClient("155.158.102.75", 25);
+                    client.UseDefaultCredentials = true;
+
+                    person.Subject = "Zgłoszenie awarii sprzętu - " + F + "/" + A + "/" + S;
+                    person.Body = @"Zgłoszenie awarii wysłane!" + "\n\n" + N + "\n" + M + "\n\n" + F + "/" + A + "/" + S + "\n\n" + "Treść: " + C;
+                    admin.Subject = "Zgłoszenie awarii sprzętu - " + F + "/" + A + "/" + S;
+                    admin.Body = @"Zgłoszenie awarii wysłane!" + "\n\n" + N + "\n" + M + "\n\n" + F + "/" + A + "/" + S + "\n\n" + "Treść: " + C;
+
+                    client.Send(person);
+                    client.Send(admin);
+
+                    cm = null;
+                    cm = new OleDbCommand("Select @@Identity", cnn);
+                    ID = (int)cm.ExecuteScalar();
+
+                    cnn.Close();
+
+                    String url = "ProblemReported.aspx?ID=" + ID;
+
+                    TC.Text = "";
+
+                    Response.Redirect(url);
+
+                }
+                else
+                {
+                    Error.Visible = true;
+                }
             }
-            else
-            {
 
+            if (RBDotyczy.SelectedValue.ToString() == "1")
+            {
+                if (C.Length > 2 && N.Length > 2 && M.Length > 2 && T.Length > 2)
+                {
+
+                    OleDbConnection cnn = null;
+
+                    cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Server.MapPath("./App_Data/Failures.accdb"));
+                    cnn.Open();
+
+                    OleDbCommand cm = new OleDbCommand("INSERT INTO failure (what, content, surname, email, floor, area, stand, sendDate) values ('OPROGRAMOWANIE', '" + C + "', '" + N + "', '" + M + "', '" + F + "','" + A + "', '" + S + "', '" + date + "')", cnn);
+
+                    cm.ExecuteNonQuery();
+
+
+                    string to = M;
+                    string from = "system@ciniba.edu.pl";
+                    string system = "d-i@ciniba.edu.pl";
+                    MailMessage person = new MailMessage(from, to);
+                    MailMessage admin = new MailMessage(from, system);
+                    SmtpClient client = new SmtpClient("155.158.102.75", 25);
+                    client.UseDefaultCredentials = true;
+
+                    person.Subject = "Zgłoszenie awarii oprogramowania - " + T;
+                    person.Body = @"Zgłoszenie awarii wysłane!" + "\n\n" + N + "\n" + M + "\n\n" + "Temat: " + T + "\n" + "Treść: " + C;
+                    admin.Subject = "Zgłoszenie awarii oprogramowania - " + T;
+                    admin.Body = @"Nowe zgłoszenie awarii!" + "\n\n" + N + "\n" + M + "\n\n" + "Temat: " + T + "\n" + "Treść: " + C;
+
+                    client.Send(person);
+                    client.Send(admin);
+
+
+                    cm = null;
+                    cm = new OleDbCommand("Select @@Identity", cnn);
+                    ID = (int)cm.ExecuteScalar();
+
+                    cnn.Close();
+
+                    String url = "ProblemReported.aspx?ID=" + ID;
+
+                    TC.Text = "";
+
+                    Response.Redirect(url); ;
+
+
+
+                }
+                else
+                {
+                    Error.Visible = true;
+                }
             }
         }
         public static string FirstCharToUpper(string input)
@@ -152,8 +216,8 @@ namespace web
                 Area.Enabled = false;
                 Stand.Enabled = false;
                 TTemat.Enabled = true;
-                //TabelaSprzet.Visible = false;
-                //TabelaOprogramowanie.Visible = true;
+                TabelaSprzet.Visible = false;
+                TabelaOprogramowanie.Visible = true;
             }
             if (RBDotyczy.SelectedValue.ToString() == "0")
             {
@@ -161,8 +225,8 @@ namespace web
                 Area.Enabled = true;
                 Stand.Enabled = true;
                 TTemat.Enabled = false;
-                //TabelaSprzet.Visible = true;
-                //TabelaOprogramowanie.Visible = false;
+                TabelaSprzet.Visible = true;
+                TabelaOprogramowanie.Visible = false;
             }
         }
 

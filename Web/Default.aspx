@@ -60,7 +60,9 @@
             <tr>
                 <td style="width: 10%; text-align: right; padding-right: 10px;">&nbsp;</td>
                 <td>
-                    &nbsp;</td>
+                    <asp:Label ID="Error" runat="server" ForeColor="Red" Text="Wszystkie pola muszą zostać wypełnione, minimum 2 znaki!" Visible="False"></asp:Label>
+                    <br />
+                </td>
             </tr>
             <tr>
                 <td style="width: 10%; text-align: right; padding-right: 10px;">Dotyczy:</td>

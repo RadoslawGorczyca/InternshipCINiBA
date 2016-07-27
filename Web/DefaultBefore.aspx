@@ -51,14 +51,16 @@
             <tr>
                 <td style="width: 10%; text-align: right; padding-right: 10px;">&nbsp;</td>
                 <td class="auto-style1">
-                    &nbsp;</td>
+                    <asp:Label ID="Error" runat="server" ForeColor="Red" Text="Wszystkie pola muszą zostać wypełnione, minimum 2 znaki!" Visible="False"></asp:Label>
+                    <br />
+                </td>
             </tr>
             <tr>
                 <td style="width: 10%; text-align: right; padding-right: 10px;">Dotyczy:</td>
                 <td class="auto-style1">
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
-                            <asp:RadioButtonList ID="RBDotyczy" runat="server" AutoPostBack="True" Font-Names="Arial Unicode MS" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" Width="450px">
+                            <asp:RadioButtonList ID="RBDotyczy" runat="server" AutoPostBack="True" Font-Names="Arial Unicode MS" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" Width="450px" Height="29px">
                                 <asp:ListItem Selected="True" Value="0">Sprzętu</asp:ListItem>
                                 <asp:ListItem Value="1">Oprogramowania</asp:ListItem>
                             </asp:RadioButtonList>
