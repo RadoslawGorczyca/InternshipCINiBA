@@ -190,6 +190,7 @@
                         <asp:BoundField DataField="stand" HeaderText="stanowisko" SortExpression="stand" />
                         <asp:BoundField DataField="sendDate" HeaderText="data" SortExpression="sendDate" />
                         <asp:BoundField DataField="comments" HeaderText="komentarze" SortExpression="comments" />
+                        <asp:CheckBoxField DataField="archived" HeaderText="zrealizowano?" ReadOnly="True" SortExpression="archived" />
                     </Columns>
                     <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
                     <HeaderStyle BackColor="#FF9900" Font-Bold="True" ForeColor="White" />
@@ -201,7 +202,7 @@
                     <SortedDescendingCellStyle BackColor="#FCF6C0" />
                     <SortedDescendingHeaderStyle BackColor="#996600" />
                 </asp:GridView>
-                <asp:SqlDataSource ID="Awarie" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [content], [surname], [email], [floor], [area], [stand], [sendDate], [comments] FROM [failure] WHERE (([floor] = ?) AND ([area] = ?) AND ([stand] = ?)) ORDER BY [sendDate] DESC">
+                <asp:SqlDataSource ID="Awarie" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [content], [surname], [email], [floor], [area], [stand], [sendDate], [comments], [archived] FROM [failure] WHERE (([floor] = ?) AND ([area] = ?) AND ([stand] = ?)) ORDER BY [sendDate] DESC">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="Floor" Name="floor" PropertyName="SelectedValue" Type="String" />
                         <asp:ControlParameter ControlID="Area" Name="area" PropertyName="SelectedValue" Type="String" />
@@ -219,6 +220,7 @@
                                 <asp:BoundField DataField="email" HeaderText="e-mail" SortExpression="email" />
                                 <asp:BoundField DataField="sendDate" HeaderText="data" SortExpression="sendDate" />
                                 <asp:BoundField DataField="comments" HeaderText="komentarze" SortExpression="comments" />
+                                <asp:CheckBoxField DataField="archived" HeaderText="Zrealizowano?" ReadOnly="True" SortExpression="archived" />
                             </Columns>
                             <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#FF9900" Font-Bold="True" ForeColor="White" />
@@ -230,7 +232,7 @@
                             <SortedDescendingCellStyle BackColor="#FCF6C0" />
                             <SortedDescendingHeaderStyle BackColor="#996600" />
                         </asp:GridView>
-                        <asp:SqlDataSource ID="Awarie0" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [topic], [content], [surname], [email], [sendDate], [comments] FROM [failure] WHERE ([what] = ?) ORDER BY [sendDate] DESC">
+                        <asp:SqlDataSource ID="Awarie0" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [topic], [content], [surname], [email], [sendDate], [comments], [archived] FROM [failure] WHERE ([what] = ?) ORDER BY [sendDate] DESC">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="OPROGRAMOWANIE" Name="what" Type="String" />
                             </SelectParameters>
