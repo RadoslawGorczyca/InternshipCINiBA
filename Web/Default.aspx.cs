@@ -155,7 +155,7 @@ namespace web
                     cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Server.MapPath("./App_Data/Failures.accdb"));
                     cnn.Open();
 
-                    OleDbCommand cm = new OleDbCommand("INSERT INTO failure (what, content, surname, email, floor, area, stand, sendDate) values ('OPROGRAMOWANIE', '" + C + "', '" + N + "', '" + M + "', '" + F + "','" + A + "', '" + S + "', '" + date + "')", cnn);
+                    OleDbCommand cm = new OleDbCommand("INSERT INTO failure (what, topic, content, surname, email, floor, area, stand, sendDate) values ('OPROGRAMOWANIE', '" + C+ "', '" + T + "', '" + N + "', '" + M + "', '" + F + "','" + A + "', '" + S + "', '" + date + "')", cnn);
 
                     cm.ExecuteNonQuery();
 
