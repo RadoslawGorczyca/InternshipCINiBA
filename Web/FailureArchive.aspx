@@ -100,7 +100,7 @@
             <tr>
                 <td><asp:Button ID="Button1" runat="server" Text="PDF" OnClick="pdfClick" /></td>
                 <td>
-                    <asp:Button ID="BBack" runat="server" Text="Wstecz" style="height: 26px" OnClick="BBack_Click" />
+                    <asp:Button ID="BBack" runat="server" Text="Przywróć" style="height: 26px" OnClick="BBack_Click" />
                 </td>
             </tr>
         </table>
