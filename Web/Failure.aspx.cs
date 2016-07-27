@@ -128,61 +128,69 @@ namespace web
             cm.ExecuteScalar();
 
             conn.Close();
-            /*  
+
+            OleDbConnection cnn = null;
+            cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Server.MapPath("./App_Data/Users.accdb"));
+            cnn.Open();
+
+            OleDbCommand cmmailFwd = new OleDbCommand("SELECT email FROM users WHERE login = '" + owner + "'", cnn);
+            String mailFwd = cmmailFwd.ExecuteScalar().ToString();
+            cnn.Close();
+
             //Definiowanie maili. Skomentowane bo wymaga konfiguracji tj. podania odpowiedniego portu, hostingu itd.
-            string system_mail = "andrzej.koziara@us.edu.pl";
-            string system_password = "";
-            string adminstration_mail = "";
+            string toFwd = mailFwd;
+            string to = TMail.Text.ToString();
+            string from = "system@ciniba.edu.pl";
+            string system = "d-i@ciniba.edu.pl";
+            MailMessage personFwd = new MailMessage(from, toFwd);
+            MailMessage person = new MailMessage(from, to);
+            MailMessage admin = new MailMessage(from, system);
+            SmtpClient client = new SmtpClient("155.158.102.75", 25);
+            client.UseDefaultCredentials = true;
 
-            SmtpClient client = new SmtpClient
+
+            if(Cforward.Checked == true)
             {
-                Host = "155.158.",
-                Port = 587,
-                EnableSsl = false,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new System.Net.NetworkCredential(system_mail, system_password),
-                Timeout = 10000,
-            };
-            if ((Cforward.Checked == false) && (CArch.Checked == false))
-            {
-                MailMessage customer = new MailMessage(system_mail, TMail.ToString(), "Przyjęcie Awarii", "Twoje zgłoszenie zostało przyjęte przez: " + owner);
-                client.Send(customer);
+                if (TTemat.Text.Equals(""))
+                {
+                    personFwd.Subject = "Przydzielono nowe zgłoszenie awarii sprzętu dla " + owner;
+                    personFwd.Body = @"Przydzielono zgłoszenie awarii sprzętu użytkownikowi " + owner + ":" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + TFloor.Text.ToString() + "/" + TArea.Text.ToString() + "/" + TStand.Text.ToString() + "\n\n" + "Treść: " + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString();
+                    admin.Subject = "Przydzielono nowe zgłoszenie awarii sprzętu dla " + owner;
+                    admin.Body = @"Przydzielono zgłoszenie awarii sprzętu użytkownikowi " + owner + ":" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + TFloor.Text.ToString() + "/" + TArea.Text.ToString() + "/" + TStand.Text.ToString() + "\n\n" + "Treść: " + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString();
+                }
+                else
+                {
+                    personFwd.Subject = "Przydzielono nowe zgłoszenie awarii oprogramowania dla " + owner;
+                    personFwd.Body = @"Przydzielono zgłoszenie awarii oprogramowania użytkownikowi " + owner + ":" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + "Temat: " + TTemat.Text.ToString() + "\n" + "Treść: " + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString();
+                    admin.Subject = "Przydzielono nowe zgłoszenie awarii oprogramowania dla " + owner;
+                    admin.Body = @"Przydzielono zgłoszenie awarii oprogramowania użytkownikowi " + owner + ":" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + "Temat: " + TTemat.Text.ToString() + "\n" + "Treść: " + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString();
+                }
 
-                MailMessage administration = new MailMessage(system_mail, adminstration_mail, "Zgłoszenie awarii", "Nowe zgłoszenie awarii oczekuje na przyjęcie.");
-                client.Send(administration);
-            }
-            if ((Cforward.Checked == true) && (CArch.Checked == false))
-            {
-                OleDbCommand cmOwner = new OleDbCommand("SELECT email FROM Users WHERE login = '" + owner + "'", conn);
-                String ownerEmail = cmOwner.ExecuteScalar().ToString();
-
-                MailMessage ownerMail = new MailMessage(system_mail, ownerEmail, "Zgłoszenie awarii", "Nowe zgłoszenie awarii zostało przekazane Tobie.");
-                client.Send(ownerMail);
-            }
-
-            if ((Cforward.Checked == true) && (FirstCharToUpper(Session["logged as"].ToString()) == "Admin") && (CArch.Checked == false))
-            {
-                OleDbCommand cmOwner = new OleDbCommand("SELECT email FROM Users WHERE login = '" + owner + "'", conn);
-                String ownerEmail = cmOwner.ExecuteScalar().ToString();
-
-                MailMessage ownerMail = new MailMessage(system_mail, ownerEmail, "Zgłoszenie awarii - Pilne!", "Nowe zgłoszenie awarii zostało przekazane Tobie.");
-                client.Send(ownerMail);
+                client.Send(personFwd);
+                client.Send(admin);
             }
 
-            if ((Cforward.Checked == false) && (CArch.Checked == true))
+            if(CArch.Checked == true)
             {
-                MailMessage customer = new MailMessage(system_mail, TMail.ToString(), "Rozwiązanie Awarii", "Twoje zgłoszenie zostało rozpatrzone i przeniesione do archiwum. Komentarz działu technicznego: " + oldComments);
-                client.Send(customer);
+                if (TTemat.Text.Equals(""))
+                {
+                    person.Subject = "Zrealizowano zgłoszenie dla stanowiska " + TFloor.Text.ToString() + "/" + TArea.Text.ToString() + "/" + TStand.Text.ToString();
+                    person.Body = @"Zrealizowane zgłoszenie:" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + TFloor.Text.ToString() + "/" + TArea.Text.ToString() + "/" + TStand.Text.ToString() + "\n\n" + TTemat.Text.ToString() + "\n" + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString() + "\n\n" + "Dziękujemy za zgłoszenie awarii!";
+                    admin.Subject = "Zarchiwizowano zgłoszenie dla stanowiska " + TFloor.Text.ToString() + "/" + TArea.Text.ToString() + "/" + TStand.Text.ToString();
+                    admin.Body = @"Zarchiwizowane zgłoszenie:" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + TFloor.Text.ToString() + "/" + TArea.Text.ToString() + "/" + TStand.Text.ToString() + "\n\n" + TTemat.Text.ToString() + "\n" + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString();
+                }
+                else
+                {
+                    person.Subject = "Zrealizowano zgłoszenie awarii oprogramowania";
+                    person.Body = @"Zrealizowane zgłoszenie:" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + "Temat: " + TTemat.Text.ToString() + "\n" + "Treść: " + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString() + "\n\n" + "Dziękujemy za zgłoszenie awarii!";
+                    admin.Subject = "Zarchiwizowano zgłoszenie awarii oprogramowania";
+                    admin.Body = @"Zarchiwizowane zgłoszenie:" + "\n\n" + "Imię i nazwisko: " + TName.Text.ToString() + "\n" + "E-mail: " + TMail.Text.ToString() + "\n\n" + "Temat: " + TTemat.Text.ToString() + "\n" + "Treść: " + TFailure.Text.ToString() + "\n\n" + "Komentarze: " + TOldComment.Text.ToString();
+                }
 
-                MailMessage administration = new MailMessage(system_mail, adminstration_mail, "Rozwiązanie Awarii", "Zgłoszenie zostało przeniesione do archiwum");
-                client.Send(administration);
+                client.Send(person);
+                client.Send(admin);
             }
 
-            if ((Cforward.Checked == true) && (CArch.Checked == true))
-            {
-                //do nothing lol
-            }
-            */
 
             Response.Redirect("FailureService.aspx?saved=true");
         }
