@@ -16,7 +16,7 @@
                        { 
                            %><li class="menuHeaderExtraLi">Zalogowany jako: <strong><% Response.Write((String)Session["logged as"]); %></strong> </li><%
                            %><li><a href="ManageUsers.aspx" class="btn">Zarządzanie użytkownikami</a></li> <% 
-                           %><li><a href="Default.aspx" class="btn">Obsługa zgłoszeń</a></li> <%        
+                           %><li><a href="FailureService.aspx" class="btn">Obsługa zgłoszeń</a></li> <%        
                        } %>
                     <li>
                         <a href="LogOut.aspx" class="btn">Wyloguj</a>
