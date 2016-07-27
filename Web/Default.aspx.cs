@@ -42,6 +42,7 @@ namespace web
                     TTemat.Enabled = true;
                     //TabelaSprzet.Visible = false;
                     //TabelaOprogramowanie.Visible = true;
+                    
                 }
                 if (RBDotyczy.SelectedValue.ToString() == "0")
                 {
