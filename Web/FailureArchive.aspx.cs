@@ -56,7 +56,9 @@ namespace web
                 OleDbCommand cmFailure = new OleDbCommand("SELECT content FROM failure WHERE id = " + Request.QueryString["id"] + "", conn);
                 OleDbCommand cmForwarded = new OleDbCommand("SELECT forwarded FROM failure WHERE id = " + Request.QueryString["id"] + "", conn);
                 OleDbCommand cmOwner = new OleDbCommand("SELECT owner FROM failure WHERE id = " + Request.QueryString["id"] + "", conn);
+                OleDbCommand cmTemat = new OleDbCommand("SELECT topic FROM failure WHERE id = " + Request.QueryString["id"] + "", conn);
                 OleDbCommand cmArchive = new OleDbCommand("SELECT archived FROM failure WHERE id = " + Request.QueryString["id"] + "", conn);
+
 
                 if (TOldComment.Text.Equals(""))
                 {
@@ -68,6 +70,7 @@ namespace web
                     TArea.Text = cmArea.ExecuteScalar().ToString();
                     TStand.Text = cmStand.ExecuteScalar().ToString();
                     TFailure.Text = cmFailure.ExecuteScalar().ToString();
+                    TTemat.Text = cmTemat.ExecuteScalar().ToString();
                     TForwarded.Text = cmForwarded.ExecuteScalar().ToString();
                 }
 

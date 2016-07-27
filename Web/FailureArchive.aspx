@@ -68,6 +68,12 @@
                 </td>
             </tr>
             <tr>
+                <td style="border-right: 1px #CCC solid; border-bottom: 1px #CCC solid;">Temat</td>
+                <td style="border-bottom: 1px #CCC solid;">
+                    <asp:Label ID="TTemat" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+            <tr>
                 <td style="border-right: 1px #CCC solid; border-bottom: 1px #CCC solid;">Awaria</td>
                 <td style="border-bottom: 1px #CCC solid;">
                     <asp:TextBox ID="TFailure" TextMode="multiline" readonly = 'true' runat="server" Width="100%" Rows="15" BorderStyle="None" ForeColor="#646464"></asp:TextBox>
