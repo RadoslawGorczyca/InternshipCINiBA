@@ -67,7 +67,7 @@
                 <td>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
-                            <asp:RadioButtonList ID="RBDotyczy" runat="server" AutoPostBack="True" Font-Names="Arial Unicode MS" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" Width="450px">
+                            <asp:RadioButtonList ID="RBDotyczy" runat="server" Font-Names="Arial Unicode MS" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" Width="450px">
                                 <asp:ListItem Selected="True" Value="0">Sprzętu</asp:ListItem>
                                 <asp:ListItem Value="1">Oprogramowania</asp:ListItem>
                             </asp:RadioButtonList>
@@ -172,6 +172,82 @@
             </tr>
             </table>
     </div>
+        <p>
+        </p>
+        <asp:UpdatePanel ID="UpdatePanel8" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:GridView ID="TabelaSprzet" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="Awarie" ForeColor="#333333" GridLines="None" Width="1142px">
+                    <AlternatingRowStyle BackColor="White" />
+                    <Columns>
+                        <asp:BoundField DataField="content" HeaderText="treść" SortExpression="content" />
+                        <asp:BoundField DataField="surname" HeaderText="nazwisko" SortExpression="surname" />
+                        <asp:BoundField DataField="email" HeaderText="e-mail" SortExpression="email" />
+                        <asp:BoundField DataField="floor" HeaderText="piętro" SortExpression="floor" />
+                        <asp:BoundField DataField="area" HeaderText="strefa" SortExpression="area" />
+                        <asp:BoundField DataField="stand" HeaderText="stanowisko" SortExpression="stand" />
+                        <asp:BoundField DataField="sendDate" HeaderText="data" SortExpression="sendDate" />
+                        <asp:BoundField DataField="comments" HeaderText="komentarze" SortExpression="comments" />
+                    </Columns>
+                    <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#FF9900" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
+                    <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+                    <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                    <SortedAscendingHeaderStyle BackColor="#CC9900" />
+                    <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                    <SortedDescendingHeaderStyle BackColor="#996600" />
+                </asp:GridView>
+                <asp:SqlDataSource ID="Awarie" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [content], [surname], [email], [floor], [area], [stand], [sendDate], [comments] FROM [failure] WHERE (([floor] = ?) AND ([area] = ?) AND ([stand] = ?)) ORDER BY [sendDate] DESC">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="Floor" Name="floor" PropertyName="SelectedValue" Type="String" />
+                        <asp:ControlParameter ControlID="Area" Name="area" PropertyName="SelectedValue" Type="String" />
+                        <asp:ControlParameter ControlID="Stand" Name="stand" PropertyName="SelectedValue" Type="String" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+                <asp:UpdatePanel ID="UpdatePanel9" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:GridView ID="TabelaOprogramowanie" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" datasourceid="Awarie0" ForeColor="#333333" GridLines="None" Width="1139px">
+                            <AlternatingRowStyle BackColor="White" />
+                            <Columns>
+                                <asp:BoundField DataField="topic" HeaderText="temat" SortExpression="topic" />
+                                <asp:BoundField DataField="content" HeaderText="treść" SortExpression="content" />
+                                <asp:BoundField DataField="surname" HeaderText="nazwisko" SortExpression="surname" />
+                                <asp:BoundField DataField="email" HeaderText="e-mail" SortExpression="email" />
+                                <asp:BoundField DataField="sendDate" HeaderText="data" SortExpression="sendDate" />
+                                <asp:BoundField DataField="comments" HeaderText="komentarze" SortExpression="comments" />
+                            </Columns>
+                            <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#FF9900" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
+                            <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+                            <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                            <SortedAscendingHeaderStyle BackColor="#CC9900" />
+                            <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                            <SortedDescendingHeaderStyle BackColor="#996600" />
+                        </asp:GridView>
+                        <asp:SqlDataSource ID="Awarie0" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [topic], [content], [surname], [email], [sendDate], [comments] FROM [failure] WHERE ([what] = ?) ORDER BY [sendDate] DESC">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="OPROGRAMOWANIE" Name="what" Type="String" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="Floor" EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="Area" EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="Stand" EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="RBDotyczy" EventName="SelectedIndexChanged" />
+                    </Triggers>
+                </asp:UpdatePanel>
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="Floor" EventName="SelectedIndexChanged" />
+                <asp:AsyncPostBackTrigger ControlID="Area" EventName="SelectedIndexChanged" />
+                <asp:AsyncPostBackTrigger ControlID="Stand" EventName="SelectedIndexChanged" />
+                <asp:AsyncPostBackTrigger ControlID="RBDotyczy" EventName="SelectedIndexChanged" />
+            </Triggers>
+        </asp:UpdatePanel>
     </form>
 </body>
 </html>

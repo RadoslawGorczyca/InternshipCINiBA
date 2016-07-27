@@ -17,7 +17,6 @@ namespace web
     {
         protected void Page_Load(object sender, EventArgs e)
             {
-
                 HtmlGenericControl css;
                 css = new HtmlGenericControl();
                 css.TagName = "style";
@@ -31,8 +30,8 @@ namespace web
                 Area.Enabled = false;
                 Stand.Enabled = false;
                 TTemat.Enabled = true;
-                //TabelaSprzet.Visible = false;
-                //TabelaOprogramowanie.Visible = true;
+                TabelaSprzet.Visible = false;
+                TabelaOprogramowanie.Visible = true;
             }
             if (RBDotyczy.SelectedValue.ToString() == "0")
             {
@@ -40,8 +39,8 @@ namespace web
                 Area.Enabled = true;
                 Stand.Enabled = true;
                 TTemat.Enabled = false;
-                //TabelaSprzet.Visible = true;
-                //TabelaOprogramowanie.Visible = false;
+                TabelaSprzet.Visible = true;
+                TabelaOprogramowanie.Visible = false;
             }
         }
         protected void BSend_Click(object sender, EventArgs e)
@@ -105,10 +104,6 @@ namespace web
         {
             Response.Redirect("Login.aspx");
         }
-        protected void Click(object sender, EventArgs e)
-        {
-            // Do nothing lol
-        }
 
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -116,23 +111,23 @@ namespace web
             UpdatePanel3.Update();
             UpdatePanel4.Update();
 
-            if (RBDotyczy.SelectedValue == "1")
+            if (RBDotyczy.SelectedValue.ToString() == "1")
             {
                 Floor.Enabled = false;
                 Area.Enabled = false;
                 Stand.Enabled = false;
                 TTemat.Enabled = true;
-                //TabelaSprzet.Visible = false;
-                //TabelaOprogramowanie.Visible = true;
+                TabelaSprzet.Visible = false;
+                TabelaOprogramowanie.Visible = true;
             }
-            if (RBDotyczy.SelectedValue == "0")
+            if (RBDotyczy.SelectedValue.ToString() == "0")
             {
                 Floor.Enabled = true;
                 Area.Enabled = true;
                 Stand.Enabled = true;
                 TTemat.Enabled = false;
-                //TabelaSprzet.Visible = true;
-                //TabelaOprogramowanie.Visible = false;
+                TabelaSprzet.Visible = true;
+                TabelaOprogramowanie.Visible = false;
             }
         }
 

@@ -33,7 +33,26 @@ namespace web
                 css.Attributes.Add("type", "text/css");
                 css.InnerHtml = "@import \"" + Request.Url.GetLeftPart(UriPartial.Authority) + VirtualPathUtility.ToAbsolute("~/") + "Styles/site.css\";";
                 Page.Header.Controls.Add(css);
-                
+
+                if (RBDotyczy.SelectedValue.ToString() == "1")
+                {
+                    Floor.Enabled = false;
+                    Area.Enabled = false;
+                    Stand.Enabled = false;
+                    TTemat.Enabled = true;
+                    //TabelaSprzet.Visible = false;
+                    //TabelaOprogramowanie.Visible = true;
+                }
+                if (RBDotyczy.SelectedValue.ToString() == "0")
+                {
+                    Floor.Enabled = true;
+                    Area.Enabled = true;
+                    Stand.Enabled = true;
+                    TTemat.Enabled = false;
+                    //TabelaSprzet.Visible = true;
+                    //TabelaOprogramowanie.Visible = false;
+                }
+
                 String log = FirstCharToUpper(Session["logged as"].ToString());
 
                 OleDbConnection conn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Server.MapPath("./App_Data/Users.accdb"));
@@ -120,16 +139,30 @@ namespace web
                 throw new ArgumentException("ARGH!");
             return input.First().ToString().ToUpper() + input.Substring(1);
         }
-        protected void Click(object sender, EventArgs e)
-        {
-            //Do nothing lol
-        }
-
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdatePanel2.Update();
             UpdatePanel3.Update();
             UpdatePanel4.Update();
+
+            if (RBDotyczy.SelectedValue.ToString() == "1")
+            {
+                Floor.Enabled = false;
+                Area.Enabled = false;
+                Stand.Enabled = false;
+                TTemat.Enabled = true;
+                //TabelaSprzet.Visible = false;
+                //TabelaOprogramowanie.Visible = true;
+            }
+            if (RBDotyczy.SelectedValue.ToString() == "0")
+            {
+                Floor.Enabled = true;
+                Area.Enabled = true;
+                Stand.Enabled = true;
+                TTemat.Enabled = false;
+                //TabelaSprzet.Visible = true;
+                //TabelaOprogramowanie.Visible = false;
+            }
         }
 
         protected void Floor_SelectedIndexChanged(object sender, EventArgs e)
