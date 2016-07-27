@@ -7,15 +7,6 @@
     <style type="text/css">        #Select1 {
             width: 173px;
         }
-        .auto-style1 {
-            width: 1085px;
-        }
-        .auto-style2 {
-            width: 1244px;
-        }
-        .auto-style3 {
-            width: 1167px;
-        }
     </style>
 
     <script>
@@ -41,7 +32,7 @@
     </script>
 </head>
 <body>
-    <form id="form1" runat="server" name="form1" onsubmit="return validateForm();">
+    <form id="form1" runat="server" name="form1">
      <div class="mainwrapper">
         <div class="header">
             <h1 class="auto-style3"><a href="Default.aspx">System zgłaszania awarii sprzętu informatycznego budynku CINiBA</a></h1>

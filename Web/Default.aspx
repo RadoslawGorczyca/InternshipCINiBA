@@ -32,7 +32,7 @@
     </script>
 </head>
 <body>
-    <form id="form1" runat="server" name="form1" onsubmit="return validateForm();">
+    <form id="form1" runat="server" name="form1">
      <div class="mainwrapper">
         <div class="header">
             <h1><a href="Default.aspx">Zgłaszanie Awarii<asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -67,7 +67,7 @@
                 <td>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
-                            <asp:RadioButtonList ID="RBDotyczy" runat="server" Font-Names="Arial Unicode MS" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" Width="450px">
+                            <asp:RadioButtonList ID="RBDotyczy" runat="server" Font-Names="Arial Unicode MS" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" Width="450px" AutoPostBack="True">
                                 <asp:ListItem Selected="True" Value="0">Sprzętu</asp:ListItem>
                                 <asp:ListItem Value="1">Oprogramowania</asp:ListItem>
                             </asp:RadioButtonList>
