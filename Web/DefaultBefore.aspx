@@ -53,6 +53,7 @@
                 <td class="auto-style1">
                     <asp:Label ID="Error" runat="server" ForeColor="Red" Text="Wszystkie pola muszą zostać wypełnione, minimum 2 znaki!" Visible="False"></asp:Label>
                     <br />
+                    <br />
                 </td>
             </tr>
             <tr>
@@ -70,7 +71,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 10%; text-align: right; padding-right: 10px;">Nazwisko:</td>
+                <td style="width: 10%; text-align: right; padding-right: 10px;">Imię i nazwisko:</td>
                 <td class="auto-style1">
                     <asp:TextBox ID="TN" runat="server" Width="98%"></asp:TextBox>
                 </td>
