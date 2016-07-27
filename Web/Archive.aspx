@@ -37,6 +37,8 @@
                 <td style="width:20%; border-left: 1px #CCC solid;"><a href="FailureService.aspx">Nazwisko</a></td>
                 <td style="width:20%; border-left: 1px #CCC solid;"><a href="FailureService.aspx">Data</a></td>
                 <td style="width:20%; border-left: 1px #CCC solid;"><a href="FailureService.aspx">Właściciel</a></td>
+                <td style="width:20%; border-left: 1px #CCC solid;"><a href="FailureService.aspx">Dotyczy</a></td>
+                <td style="width:20%; border-left: 1px #CCC solid;"><a href="FailureService.aspx">Temat</a></td>
             </tr>
             <% Response.Write(getArchive()); %>
         </table>

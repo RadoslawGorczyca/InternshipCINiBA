@@ -81,6 +81,8 @@ namespace web
                     output += "<td style='border-left: 1px #CCC solid;'>" + r["surname"].ToString() + "</td>";
                     output += "<td style='border-left: 1px #CCC solid;'>" + r["sendDate"].ToString() + "</td>";
                     output += "<td style='border-left: 1px #CCC solid;'>" + r["owner"].ToString() + "</td>";
+                    output += "<td style='border-left: 1px #CCC solid;'>" + r["what"].ToString() + "</td>";
+                    output += "<td style='border-left: 1px #CCC solid;'>" + r["topic"].ToString() + "</td>";
                     output += "</tr>";
                 }
 

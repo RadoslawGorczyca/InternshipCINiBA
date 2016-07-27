@@ -100,7 +100,8 @@ namespace web
                     output += "<td style='border-left: 1px #CCC solid;" + (bWIP ? " background: #F7F7F7;" : "") + "'>" + r["sendDate"].ToString() + "</td>";
                     output += "<td style='border-left: 1px #CCC solid;" + (bWIP ? " background: #F7F7F7;" : "") + "'>" + r["owner"].ToString() + "</td>";
                     output += "<td style='border-left: 1px #CCC solid;" + (bWIP ? " background: #F7F7F7;" : "") + "'>" + r["what"].ToString() + "</td>";
-                    output += "</tr>";
+                        output += "<td style='border-left: 1px #CCC solid;" + (bWIP ? " background: #F7F7F7;" : "") + "'>" + r["topic"].ToString() + "</td>";
+                        output += "</tr>";
                 }
                 }
 
