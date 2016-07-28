@@ -12,11 +12,12 @@
         {
             using (HtmlTextWriter hw = new HtmlTextWriter(sw))
             {
-                GridView1.RenderControl(hw);
+                DataList1.RenderControl(hw);
                 StringReader sr = new StringReader(sw.ToString());
-                Document pdfDoc = new Document(PageSize.A3, 10f, 10f, 10f, 0f);
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
                 PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
                 pdfDoc.Open();
+                FontFactory.RegisterDirectory("C:\\Windows\\Fonts");
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
                 pdfDoc.Close();
                 Response.ContentType = "application/pdf";
@@ -60,25 +61,64 @@
     <title></title>    
 </head>
 <body>
-    <a href="Failure.aspx">Powrót do formularza</a><br />
+    <a href="FailureService.aspx">Powrót do formularza</a><br />
     <form id="form1" runat="server">   
-        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource2">
-            <Columns>
-                <asp:BoundField DataField="id" HeaderText="Identyfikator" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                <asp:BoundField DataField="surname" HeaderText="Nazwisko" SortExpression="surname" />
-                <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" />
-                <asp:BoundField DataField="content" HeaderText="Treść" SortExpression="content" />
-                <asp:BoundField DataField="floor" HeaderText="Piętro" SortExpression="floor" />
-                <asp:BoundField DataField="area" HeaderText="Strefa" SortExpression="area" />
-                <asp:BoundField DataField="stand" HeaderText="Stanowisko" SortExpression="stand" />
-                <asp:BoundField DataField="sendDate" HeaderText="Data przesłania" SortExpression="sendDate" />
-                <asp:BoundField DataField="takeDate" HeaderText="Data przyjęcia" SortExpression="takeDate" />
-                <asp:BoundField DataField="comments" HeaderText="Komentarz administratora" SortExpression="comments" />
-                <asp:BoundField DataField="owner" HeaderText="Administrator" SortExpression="owner" />
-                <asp:BoundField DataField="forwarded" HeaderText="Ilość przekierowań" SortExpression="forwarded" />
-            </Columns>
-        </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\Failures.accdb" ProviderName="System.Data.OleDb" SelectCommand="SELECT [id], [content], [surname], [email], [floor], [area], [stand], [sendDate], [takeDate], [comments], [owner], [forwarded] FROM [failure]"></asp:SqlDataSource>
+        <asp:DataList ID="DataList1" runat="server" DataSourceID="failure" Width="513px" CellPadding="4" ForeColor="#333333">
+            <AlternatingItemStyle BackColor="White" />
+            <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+            <ItemStyle BackColor="#FFFBD6" ForeColor="#333333" />
+            <ItemTemplate>
+                Dotyczy:
+                <asp:Label ID="whatLabel" runat="server" Text='<%# Eval("what") %>' />
+                <br />
+                Data:
+                <asp:Label ID="sendDateLabel" runat="server" Text='<%# Eval("sendDate") %>' />
+                <br />
+                <br />
+                Imię i nazwisko:
+                <asp:Label ID="surnameLabel" runat="server" Text='<%# Eval("surname") %>' />
+                <br />
+                E-mail:
+                <asp:Label ID="emailLabel" runat="server" Text='<%# Eval("email") %>' />
+                <br />
+                <br />
+                Piętro:
+                <asp:Label ID="floorLabel" runat="server" Text='<%# Eval("floor") %>' />
+                <br />
+                Strefa:
+                <asp:Label ID="areaLabel" runat="server" Text='<%# Eval("area") %>' />
+                <br />
+                Stanowisko:
+                <asp:Label ID="standLabel" runat="server" Text='<%# Eval("stand") %>' />
+                <br />
+                <br />
+                Temat:
+                <asp:Label ID="topicLabel" runat="server" Text='<%# Eval("topic") %>' />
+                <br />
+                <br />
+                Treść:
+                <asp:Label ID="contentLabel" runat="server" Text='<%# Eval("content") %>' />
+                <br />
+                <br />
+                Właściciel:
+                <asp:Label ID="ownerLabel" runat="server" Text='<%# Eval("owner") %>' />
+                <br />
+                Komentarze:
+                <asp:Label ID="commentsLabel" runat="server" Text='<%# Eval("comments") %>' />
+                <br />
+                Zrealizowano?:
+                <asp:Label ID="archivedLabel" runat="server" Text='<%# Eval("archived") %>' />
+<br />
+            </ItemTemplate>
+            <SelectedItemStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+        </asp:DataList>
+        <asp:SqlDataSource ID="failure" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [what], [topic], [surname], [content], [email], [floor], [area], [stand], [sendDate], [comments], [archived], [owner] FROM [failure] WHERE ([id] = ?)">
+            <SelectParameters>
+                <asp:QueryStringParameter Name="id" QueryStringField="id" Type="Int32" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <br />
         <asp:Button ID="Button1" runat="server" OnClick="ExportToPDF" Text="Eksport do PDF" />
         <br />
 

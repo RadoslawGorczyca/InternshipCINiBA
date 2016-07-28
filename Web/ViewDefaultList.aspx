@@ -14,8 +14,9 @@
             {
                 GridView1.RenderControl(hw);
                 StringReader sr = new StringReader(sw.ToString());
-                Document pdfDoc = new Document(PageSize.A3, 10f, 10f, 10f, 0f);
+                Document pdfDoc = new Document(PageSize.A3.Rotate(), 10f, 10f, 10f, 0f);
                 PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+                FontFactory.RegisterDirectory("C:\\Windows\\Fonts");
                 pdfDoc.Open();
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
                 pdfDoc.Close();
@@ -61,18 +62,30 @@
 </head>
 <body>
     <a href="FailureService.aspx">Powrót do formularza</a><br />
+    <br />
     <form id="form1" runat="server">   
-        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource2">
+        <asp:Button ID="Button1" runat="server" OnClick="ExportToPDF" Text="Eksport do PDF" />
+        <br />
+        <br />
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2" Font-Names="Arial Unicode MS">
             <Columns>
-                <asp:BoundField DataField="id" HeaderText="Identyfikator" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                <asp:BoundField DataField="content" HeaderText="Treść" SortExpression="content" />
-                <asp:BoundField DataField="surname" HeaderText="Nazwisko" SortExpression="surname" />
-                <asp:BoundField DataField="sendDate" HeaderText="Data przesłania" SortExpression="sendDate" />
-                <asp:BoundField DataField="owner" HeaderText="Administrator" SortExpression="owner" />
+                <asp:BoundField DataField="what" HeaderText="what" SortExpression="what" />
+                <asp:BoundField DataField="topic" HeaderText="topic" SortExpression="topic" />
+                <asp:BoundField DataField="content" HeaderText="treść" SortExpression="content" />
+                <asp:BoundField DataField="surname" HeaderText="surname" SortExpression="surname" />
+                <asp:BoundField DataField="email" HeaderText="email" SortExpression="email" />
+                <asp:BoundField DataField="floor" HeaderText="floor" SortExpression="floor" />
+                <asp:BoundField DataField="area" HeaderText="area" SortExpression="area" />
+                <asp:BoundField DataField="stand" HeaderText="stand" SortExpression="stand" />
+                <asp:BoundField DataField="sendDate" HeaderText="sendDate" SortExpression="sendDate" />
+                <asp:BoundField DataField="comments" HeaderText="comments" SortExpression="comments" />
+                <asp:CheckBoxField DataField="archived" HeaderText="archived" SortExpression="archived" ReadOnly="True" >
+                <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                </asp:CheckBoxField>
+                <asp:BoundField DataField="owner" HeaderText="owner" SortExpression="owner" />
             </Columns>
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\Failures.accdb" ProviderName="System.Data.OleDb" SelectCommand="SELECT [id], [content], [surname], [sendDate], [owner], FROM [failure]"></asp:SqlDataSource>
-        <asp:Button ID="Button1" runat="server" OnClick="ExportToPDF" Text="Eksport do PDF" />
+        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:Failures %>" ProviderName="<%$ ConnectionStrings:Failures.ProviderName %>" SelectCommand="SELECT [what], [topic], [content], [surname], [email], [floor], [area], [stand], [sendDate], [comments], [archived], [owner] FROM [failure] ORDER BY [sendDate] DESC"></asp:SqlDataSource>
         <br />
 
 

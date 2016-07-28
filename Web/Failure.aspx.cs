@@ -87,7 +87,8 @@ namespace web
 
         protected void pdfClick(object sender, EventArgs e)
         {
-            Response.Redirect("ViewDefault.aspx");
+            string url = "ViewDefault.aspx?id=" + Request.QueryString["id"];
+            Response.Redirect(url);
         }
 
         protected void BSave_Click(object sender, EventArgs e)
